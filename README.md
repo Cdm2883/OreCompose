@@ -27,7 +27,7 @@
 - [Monocraft](https://github.com/IdreesInc/Monocraft) 提供部分字体代替方案
 
 ## 🎈 开源
-本项目非 Mincraft (译《我的世界》) 官方产品, 也不与 Mojang 或 Microsoft (微软) 关联.   
+本项目非 Minecraft (译《我的世界》) 官方产品, 也不与 Mojang 或 Microsoft (微软) 关联.   
 项目采用 Apache License 2.0 开源.
 请参阅 [LICENSE](LICENSE) 文件了解详情.
 ```
