@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import vip.cdms.orecompose.effect.*
@@ -27,6 +26,9 @@ import vip.cdms.orecompose.style.LocalPixelSize
 import vip.cdms.orecompose.style.OreColors
 import vip.cdms.orecompose.style.px
 import vip.cdms.orecompose.utils.argb
+import vip.cdms.orecompose.utils.square
+import vip.cdms.orecompose.utils.toPx
+import vip.cdms.orecompose.utils.zero
 
 object ToggleDefaults {
     val Modifier get() = androidx.compose.ui.Modifier.sound()
@@ -94,9 +96,9 @@ fun Toggle(
 ) {
     val hovered by interactionSource.collectIsHoveredAsState()
     val pressed by interactionSource.collectIsPressedAsState()
-    
+
     val palette = if (enabled) TogglePaletteDefault else TogglePaletteDisabled
-    val ps = with(LocalDensity.current) { LocalPixelSize.current.toPx() }
+    val ps = LocalPixelSize.current.toPx()
     val offset by animateDpAsState(if (checked) 14.px else 0.px, animationSpec)
     
     CompositionLocalProvider(
@@ -130,16 +132,16 @@ fun Toggle(
                         drawRect(palette.trackOnBackground)
                         drawRect(palette.trackOnBorderTop, size = size.copy(height = ps))
                         drawRect(palette.trackOnBorderTop, size = size.copy(width = ps))
-                        drawRect(palette.trackOnBorderBottom, Offset.Zero.copy(y = size.height - ps), size.copy(height = ps))
-                        drawRect(palette.trackOnBorderJunction, Offset.Zero.copy(y = size.height - ps), Size(ps, ps))
+                        drawRect(palette.trackOnBorderBottom, Offset.zero(y = size.height - ps), size.copy(height = ps))
+                        drawRect(palette.trackOnBorderJunction, Offset.zero(y = size.height - ps), Size.square(ps))
                         
                         drawRect(palette.trackOnMark, Offset(6 * ps, 3 * ps), Size(ps, 6 * ps))
                         
-                        drawRect(palette.trackOffBackground, Offset.Zero.copy(x = size.width / 2), size.copy(width = size.width / 2))
-                        drawRect(palette.trackOffBorderTop, Offset.Zero.copy(x = size.width / 2), Size(size.width / 2, ps))
+                        drawRect(palette.trackOffBackground, Offset.zero(x = size.width / 2), size.copy(width = size.width / 2))
+                        drawRect(palette.trackOffBorderTop, Offset.zero(x = size.width / 2), Size(size.width / 2, ps))
                         drawRect(palette.trackOffBorderBottom, Offset(size.width / 2, size.height - ps), Size(size.width / 2, ps))
-                        drawRect(palette.trackOffBorderBottom, Offset.Zero.copy(x = size.width - ps), size.copy(width = ps))
-                        drawRect(palette.trackOffBorderJunction, Offset.Zero.copy(x = size.width - ps), Size(ps, ps))
+                        drawRect(palette.trackOffBorderBottom, Offset.zero(x = size.width - ps), size.copy(width = ps))
+                        drawRect(palette.trackOffBorderJunction, Offset.zero(x = size.width - ps), Size.square(ps))
                         
                         drawRect(palette.trackOffMark, Offset(size.width - 9 * ps, 3 * ps), Size(4 * ps, ps))
                         drawRect(palette.trackOffMark, Offset(size.width - 9 * ps, 8 * ps), Size(4 * ps, ps))
@@ -162,13 +164,13 @@ fun Toggle(
                         drawRect(palette.thumbBorderTop, size = size.copy(height = ps))
                         drawRect(palette.thumbBorderTop, size = size.copy(width = ps))
                         
-                        drawRect(palette.thumbBorderBottom, Offset.Zero.copy(y = size.height - 3 * ps), size.copy(height = ps))
-                        drawRect(palette.thumbBorderBottom, Offset.Zero.copy(x = size.width - ps), size.copy(width = ps))
+                        drawRect(palette.thumbBorderBottom, Offset.zero(y = size.height - 3 * ps), size.copy(height = ps))
+                        drawRect(palette.thumbBorderBottom, Offset.zero(x = size.width - ps), size.copy(width = ps))
                         
-                        drawRect(palette.thumbBorderJunction, Offset.Zero.copy(y = size.height - 3 * ps), Size(ps, ps))
-                        drawRect(palette.thumbBorderJunction, Offset.Zero.copy(x = size.width - ps), Size(ps, ps))
+                        drawRect(palette.thumbBorderJunction, Offset.zero(y = size.height - 3 * ps), Size.square(ps))
+                        drawRect(palette.thumbBorderJunction, Offset.zero(x = size.width - ps), Size.square(ps))
                         
-                        drawRect(palette.thumbShadow, Offset.Zero.copy(y = size.height - 2 * ps), size.copy(height = 2 * ps))
+                        drawRect(palette.thumbShadow, Offset.zero(y = size.height - 2 * ps), size.copy(height = 2 * ps))
                     }
                     then modifierThumb
             )

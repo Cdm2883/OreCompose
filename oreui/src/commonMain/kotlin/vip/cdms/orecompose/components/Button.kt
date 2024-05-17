@@ -19,6 +19,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import vip.cdms.orecompose.effect.*
 import vip.cdms.orecompose.style.*
+import vip.cdms.orecompose.utils.offset
+import vip.cdms.orecompose.utils.square
+import vip.cdms.orecompose.utils.toPx
+import vip.cdms.orecompose.utils.zero
 import kotlin.math.min
 
 data class ButtonStyle(
@@ -65,8 +69,8 @@ fun Button(
     val hovered by interactionSource.collectIsHoveredAsState()
     val pressed by interactionSource.collectIsPressedAsState()
     
-    val buttonPressed = pressable && (pressed || activated)
-    val pixelSizeDp = LocalPixelSize.current
+    val stylePressed = pressable && (pressed || activated)
+    val ps = LocalPixelSize.current.toPx()
     val style = when {
         !enabled  -> stylesDisabled
         activated -> styles.active
@@ -76,20 +80,17 @@ fun Button(
     }
     
     val drawBackground = fun DrawScope.() {
-        val ps = pixelSizeDp.toPx()
-        val paddingBottom = if (buttonPressed) 0f else ps * 2
+        val paddingBottom = if (stylePressed) 0f else 2 * ps
         drawRect(style.background)
         drawRect(style.borderTop, size = size.copy(height = ps))
-        drawRect(style.borderTop, size = size.copy(width = ps, height = size.height - paddingBottom))
-        drawRect(style.borderBottom, Offset.Zero.copy(y = size.height - ps - paddingBottom), size.copy(height = ps))
-        drawRect(style.borderBottom, Offset.Zero.copy(x = size.width - ps), size.copy(width = ps, height = size.height - paddingBottom))
-        val block = Size(ps, ps)
-        drawRect(style.borderJunction, Offset.Zero.copy(y = size.height - ps - paddingBottom), block)
-        drawRect(style.borderJunction, Offset.Zero.copy(x = size.width - ps), block)
-        if (!buttonPressed) drawRect(style.shadow!!, Offset.Zero.copy(y = size.height - paddingBottom), size.copy(height = paddingBottom))
-        if (activated) {
-            val dashWidth = min(size.width * .3f, 32 * ps)
-            drawRect(style.activeDash!!, Offset(x = size.width / 2 - dashWidth / 2, y = size.height - ps), Size(width = dashWidth, height = ps))
+        drawRect(style.borderTop, size = size.copy(width = ps).offset(height = -paddingBottom))
+        drawRect(style.borderBottom, Offset.zero(y = size.height - ps - paddingBottom), size.copy(height = ps))
+        drawRect(style.borderBottom, Offset.zero(x = size.width - ps), size.copy(width = ps).offset(height = -paddingBottom))
+        drawRect(style.borderJunction, Offset.zero(y = size.height - ps - paddingBottom), Size.square(ps))
+        drawRect(style.borderJunction, Offset.zero(x = size.width - ps), Size.square(ps))
+        if (!stylePressed) drawRect(style.shadow!!, Offset.zero(y = size.height - paddingBottom), size.copy(height = paddingBottom))
+        if (activated) min(size.width * .3f, 32 * ps).let { dashWidth ->
+            drawRect(style.activeDash!!, Offset(size.width / 2 - dashWidth / 2, size.height - ps), Size(dashWidth, ps))
         }
     }
     
@@ -105,7 +106,7 @@ fun Button(
         Box(
                 Modifier
                     .then(rangeSize)
-                    .padding(top = if (buttonPressed) 2.px else 0.px)
+                    .padding(top = if (stylePressed) 2.px else 0.px)
                     .drawBehind(drawBackground)
                     .clickable(
                         interactionSource,
@@ -118,7 +119,7 @@ fun Button(
             Alignment.Center
         ) {
             Row(
-                Modifier.padding(bottom = if (!buttonPressed) 2.px else 0.px),
+                Modifier.padding(bottom = if (!stylePressed) 2.px else 0.px),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
                 content
