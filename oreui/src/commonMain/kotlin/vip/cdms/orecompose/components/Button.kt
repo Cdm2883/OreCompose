@@ -45,6 +45,8 @@ data class ButtonStyles(
     val disable: ButtonStyle = OreButtonStyles.Disable
 )
 
+fun ButtonStyle.band() = ButtonStyles(this, this, this, this, this)
+
 object ButtonDefaults {
     val Modifier get() = androidx.compose.ui.Modifier.outline().sound()
     val Styles = OreButtonStyles.Common
@@ -54,7 +56,7 @@ object ButtonDefaults {
 
 @Composable
 fun Button(
-    onClick: () -> Unit,
+    onClick: () -> Unit = {},
     modifier: Modifier = ButtonDefaults.Modifier,
     enabled: Boolean = true,
     activated: Boolean = false,
@@ -63,7 +65,7 @@ fun Button(
     rangeSize: DpRangeSize? = ButtonDefaults.Size,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit = {}
 ) {
     val hovered by interactionSource.collectIsHoveredAsState()
     val pressed by interactionSource.collectIsPressedAsState()
@@ -106,6 +108,7 @@ fun Button(
                 Modifier
                     .then(rangeSize)
                     .padding(top = if (stylePressed) 2.px else 0.px)
+                    .then(modifier)
                     .drawBehind(drawBackground)
                     .clickable(
                         interactionSource,
@@ -113,7 +116,6 @@ fun Button(
                         enabled = enabled,
                         onClick = onClick
                     )
-                    .then(modifier)
                     .padding(contentPadding),
             Alignment.Center
         ) {

@@ -1,6 +1,6 @@
 package vip.cdms.orecompose.example
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -73,24 +73,39 @@ fun App() {
     
     
     OreTheme {
-        // 居中显示而已
         Row(
-            Modifier.fillMaxSize().background(0xff313233.argb),
+            Modifier.fillMaxSize().background(0xff181818.argb),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(
-                Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+
+            val scrollState = rememberScrollState()
+
+            Box(Modifier.height(120.px).background(0xff313233.argb)) {
+
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(8.px),
+                    Modifier
+                        .fillMaxHeight()
+                        .verticalScroll(scrollState)
+                        .padding(vertical = 8.px),
+                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Content()
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.px),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Content()
+                    }
                 }
+
+                VerticalScrollbar(
+                    modifier = ScrollbarDefaults.VerticalModifier.align(Alignment.CenterEnd),
+                    state = scrollState
+                )
+
             }
+
         }
     }
     
