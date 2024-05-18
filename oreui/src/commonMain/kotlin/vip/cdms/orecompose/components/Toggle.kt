@@ -30,14 +30,7 @@ import vip.cdms.orecompose.utils.square
 import vip.cdms.orecompose.utils.toPx
 import vip.cdms.orecompose.utils.zero
 
-object ToggleDefaults {
-    val Modifier get() = androidx.compose.ui.Modifier.sound()
-    val TrackModifier get() = androidx.compose.ui.Modifier.outline()
-    val ThumbModifier get() = androidx.compose.ui.Modifier.outline()
-    val AnimationSpec get() = spring<Dp>(dampingRatio = 0.6f, stiffness = 2000f)  // 没法像安卓BounceInterpolator那样好看
-}
-
-private data class TogglePalette(
+data class TogglePalette(
     val trackOnBackground: Color = 0xff3c8527.argb,
     val trackOnMark: Color = 0xffffffff.argb,
     val trackOnBorderTop: Color = 0xff639d52.argb,
@@ -59,29 +52,39 @@ private data class TogglePalette(
 
     val outline: Color? = null
 )
-private val TogglePaletteDefault = TogglePalette()
-private val TogglePaletteDisabled = TogglePalette(
-    trackOnBackground = 0xffd0d1d4.argb,
-    trackOnMark = 0xff6d6d6d.argb,
-    trackOnBorderTop = 0xffd0d1d4.argb,
-    trackOnBorderBottom = 0xffd0d1d4.argb,
-    trackOnBorderJunction = 0xffd0d1d4.argb,
+data class TogglePalettes(
+    val normal: TogglePalette = TogglePalette(),
+    val disable: TogglePalette = TogglePalette(
+        trackOnBackground = 0xffd0d1d4.argb,
+        trackOnMark = 0xff6d6d6d.argb,
+        trackOnBorderTop = 0xffd0d1d4.argb,
+        trackOnBorderBottom = 0xffd0d1d4.argb,
+        trackOnBorderJunction = 0xffd0d1d4.argb,
 
-    trackOffBackground = 0xffd0d1d4.argb,
-    trackOffMark = 0xff6d6d6d.argb,
-    trackOffBorderTop = 0xffd0d1d4.argb,
-    trackOffBorderBottom = 0xffd0d1d4.argb,
-    trackOffBorderJunction = 0xffd0d1d4.argb,
+        trackOffBackground = 0xffd0d1d4.argb,
+        trackOffMark = 0xff6d6d6d.argb,
+        trackOffBorderTop = 0xffd0d1d4.argb,
+        trackOffBorderBottom = 0xffd0d1d4.argb,
+        trackOffBorderJunction = 0xffd0d1d4.argb,
 
-    thumbBackground = 0xffd0d1d4.argb,
-    thumbBackgroundHover = 0xffd0d1d4.argb,
-    thumbShadow = 0xffb1b2b5.argb,
-    thumbBorderTop = 0xffd0d1d4.argb,
-    thumbBorderBottom = 0xffd0d1d4.argb,
-    thumbBorderJunction = 0xffd0d1d4.argb,
-    
-    outline = OreColors.OutlineDisabled
+        thumbBackground = 0xffd0d1d4.argb,
+        thumbBackgroundHover = 0xffd0d1d4.argb,
+        thumbShadow = 0xffb1b2b5.argb,
+        thumbBorderTop = 0xffd0d1d4.argb,
+        thumbBorderBottom = 0xffd0d1d4.argb,
+        thumbBorderJunction = 0xffd0d1d4.argb,
+
+        outline = OreColors.OutlineDisabled
+    )
 )
+
+object ToggleDefaults {
+    val Modifier get() = androidx.compose.ui.Modifier.sound()
+    val TrackModifier get() = androidx.compose.ui.Modifier.outline()
+    val ThumbModifier get() = androidx.compose.ui.Modifier.outline()
+    val Palettes = TogglePalettes()
+    val AnimationSpec get() = spring<Dp>(dampingRatio = 0.6f, stiffness = 2000f)  // 没法像安卓BounceInterpolator那样好看
+}
 
 @Composable
 fun Toggle(
@@ -90,6 +93,7 @@ fun Toggle(
     modifier: Modifier = ToggleDefaults.Modifier,
     modifierTrack: Modifier = ToggleDefaults.TrackModifier,
     modifierThumb: Modifier = ToggleDefaults.ThumbModifier,
+    palettes: TogglePalettes = ToggleDefaults.Palettes,
     animationSpec: AnimationSpec<Dp> = ToggleDefaults.AnimationSpec,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
@@ -97,7 +101,7 @@ fun Toggle(
     val hovered by interactionSource.collectIsHoveredAsState()
     val pressed by interactionSource.collectIsPressedAsState()
 
-    val palette = if (enabled) TogglePaletteDefault else TogglePaletteDisabled
+    val palette = if (enabled) palettes.normal else palettes.disable
     val ps = LocalPixelSize.current.toPx()
     val offset by animateDpAsState(if (checked) 14.px else 0.px, animationSpec)
     

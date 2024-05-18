@@ -42,12 +42,12 @@ data class ButtonStyles(
     val hover: ButtonStyle,
     val press: ButtonStyle = hover,
     val active: ButtonStyle = press,
+    val disable: ButtonStyle = OreButtonStyles.Disable
 )
 
 object ButtonDefaults {
     val Modifier get() = androidx.compose.ui.Modifier.outline().sound()
     val Styles = OreButtonStyles.Common
-    val StylesDisabled = OreButtonStyles.Disable
     val Size @Composable get() = OreButtonSizes.Common
     val ContentPadding @Composable get() = OreButtonPaddings.Common
 }
@@ -60,7 +60,6 @@ fun Button(
     activated: Boolean = false,
     pressable: Boolean = true,
     styles: ButtonStyles = ButtonDefaults.Styles,
-    stylesDisabled: ButtonStyle = ButtonDefaults.StylesDisabled,
     rangeSize: DpRangeSize? = ButtonDefaults.Size,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -72,7 +71,7 @@ fun Button(
     val stylePressed = pressable && (pressed || activated)
     val ps = LocalPixelSize.current.toPx()
     val style = when {
-        !enabled  -> stylesDisabled
+        !enabled  -> styles.disable
         activated -> styles.active
         pressed   -> styles.press
         hovered   -> styles.hover
