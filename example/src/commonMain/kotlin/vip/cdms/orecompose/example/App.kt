@@ -1,7 +1,11 @@
 package vip.cdms.orecompose.example
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -10,12 +14,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import vip.cdms.orecompose.components.*
 import vip.cdms.orecompose.effect.outline
 import vip.cdms.orecompose.effect.sound
-import vip.cdms.orecompose.style.Bold
-import vip.cdms.orecompose.style.OreButtonStyles
-import vip.cdms.orecompose.style.OreTheme
-import vip.cdms.orecompose.style.px
+import vip.cdms.orecompose.style.*
 import vip.cdms.orecompose.utils.argb
+import vip.cdms.orecompose.utils.buildPixelIcon
 import vip.cdms.orecompose.utils.mcFormat
+import vip.cdms.orecompose.utils.painter
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
@@ -29,6 +32,23 @@ fun App() {
         
         Label("Hello, ${getPlatform()}!")
         
+        Image(
+            painter = buildPixelIcon(10) {
+                W + W + W + W + W + W + W + W + W + W    +
+                W +   +   +   +   +   +   +   +   + W    +
+                W +   +   +   +   +   +   +   +   + W    +
+                W +   +   +   + W +   +   + W +   + W    +
+                W +   +   +   + W +   +   + W +   + W    +
+                W +   +   +   + W +   +   + W +   + W    +
+                W +   +   +   +   +   +   +   +   + W    +
+                W +   +   +   +   +   +   +   +   + W    +
+                W +   +   +   +   +   +   +   +   + W    +
+                W + W + W + W + W + W + W + W + W + W
+            }.painter,
+            contentDescription = null,
+            modifier = Modifier.size(20.px)
+        )
+
 //        val parentBackground = 0xff313233.argb
 //        Label(mcFormat { "111" .. "222".red.obfuscated .. "333" }, parentBackground = parentBackground)
 //        Label("§n§9§o12§l§43§64§2§k5§16§d7§5.", parentBackground = parentBackground)
@@ -59,6 +79,12 @@ fun App() {
         
         var showMark by remember { mutableStateOf(false) }
         Button({ showMark = !showMark }, Modifier.outline().sound()/*.animateContentSize()*/) {
+            Icon(
+                painter = OreIcons.Cross.painter,
+                contentDescription = null,
+                modifier = Modifier.size(8.px)
+            )
+            Spacer(Modifier.size(8.px))
             Label(
                 mcFormat {
                     "Cdm's".blue.underline.italic .. " »" .. ("测".dark_red.bold + "试".gold) .. "服".dark_green .. "务".dark_blue .. "器".light_purple .. ".".dark_purple
