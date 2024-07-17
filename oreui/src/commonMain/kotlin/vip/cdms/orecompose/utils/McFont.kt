@@ -97,12 +97,12 @@ fun isMonocraftInclude(char: Char) = char.code in arrayOf(
     8542, 8531, 8532, 8529, 8533, 8534, 8535, 8537, 8538, 8543, 8585, 12306,
 )
 
-typealias McFontProcessor = @Composable CharSequence.() -> AnnotatedString
+typealias McFontProcessor = @Composable CharSequence.() -> CharSequence
 val DefaultMcFontProcessor: McFontProcessor = { useFont(Monocraft, -.05f, ::isMonocraftInclude) }
-val LocalMcFontProcessor = staticCompositionLocalOf { DefaultMcFontProcessor }
+val LocalMcFontProcessor = staticCompositionLocalOf<McFontProcessor?> { DefaultMcFontProcessor }
 
 @Composable
-fun CharSequence.mcFont() = LocalMcFontProcessor.current(this)
+fun CharSequence.mcFont() = LocalMcFontProcessor.current?.invoke(this) ?: this
 
 fun CharSequence.useFont(fontFamily: FontFamily, baselineShift: Float? = null, usingFont: (Char) -> Boolean) = buildAnnotatedString {
     val text = this@useFont

@@ -112,12 +112,12 @@ fun CharSequence.mcFormat(showMark: Boolean = false, defaultColor: Color = 0xfff
             if (formatting != null) {
                 consumes()
                 when (formatting) {
-                    'k' -> obfuscated = true
-                    'l' -> bold = true
-                    'm' -> strikethrough = true
-                    'n' -> underline = true
-                    'o' -> italic = true
-                    'r' -> {
+                    McFormatScope.obfuscated -> obfuscated = true
+                    McFormatScope.bold -> bold = true
+                    McFormatScope.strikethrough -> strikethrough = true
+                    McFormatScope.underline -> underline = true
+                    McFormatScope.italic -> italic = true
+                    McFormatScope.clear -> {
                         color = null
                         obfuscated = false
                         bold = false

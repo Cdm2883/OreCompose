@@ -123,9 +123,10 @@ fun Label(
             }
         }
     }
-    
+
+    val finalAnnotatedString = if (finalText is AnnotatedString) finalText else AnnotatedString.Builder().append(finalText).toAnnotatedString()
     BasicText(
-        text = finalText,
+        text = finalAnnotatedString,
         modifier = modifier.drawWithCache {
             onDrawWithContent {
                 drawContent()

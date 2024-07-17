@@ -1,8 +1,9 @@
 package vip.cdms.orecompose.utils
 
+@Suppress("ConstPropertyName", "unused", "SpellCheckingInspection")
 object McFormatScope {
-    @Suppress("NOTHING_TO_INLINE")
-    inline infix fun String.with(format: Char) = s(format) + this
+    infix fun String.with(format: Char) = s(format) + this
+    @Suppress("MemberVisibilityCanBePrivate")
     fun String.attach(vararg format: Char) = SS + format.joinToString(SS.toString()) + this
     infix fun String.with(format: String) = attach(*format.toCharArray())
     
@@ -41,8 +42,9 @@ object McFormatScope {
     const val strikethrough = 'm'
     const val underline     = 'n'
     const val italic        = 'o'
+    const val clear         = 'r'
     
-    fun String.clear() = with('r')
+    fun String.clear() = with(clear)
     val String.black              get() = with('0')
     val String.dark_blue          get() = with('1')
     val String.dark_green         get() = with('2')

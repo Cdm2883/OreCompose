@@ -27,6 +27,6 @@ data class DpRangeSize(
 }
 
 infix fun Modifier.then(rangeSize: DpRangeSize?) =
-    if (rangeSize == null || rangeSize.isUnspecified) this else
-        widthIn(rangeSize.minWidth, rangeSize.maxWidth)
+    if (rangeSize == null || rangeSize.isUnspecified) this
+    else widthIn(rangeSize.minWidth, rangeSize.maxWidth)
         .heightIn(rangeSize.minHeight, rangeSize.maxHeight)

@@ -11,7 +11,7 @@ import vip.cdms.orecompose.utils.McFontProcessor
 
 @Composable
 fun OreTheme(
-    mcFontProcessor: McFontProcessor = LocalMcFontProcessor.current,
+    mcFontProcessor: McFontProcessor? = LocalMcFontProcessor.current,
     sounds: Sounds = LocalSounds.current,
     pixelSize: Dp = LocalPixelSize.current,
     content: @Composable () -> Unit

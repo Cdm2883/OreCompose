@@ -80,14 +80,14 @@ fun App() {
         var showMark by remember { mutableStateOf(false) }
         Button({ showMark = !showMark }, Modifier.outline().sound()/*.animateContentSize()*/) {
             Icon(
-                painter = OreIcons.Cross.painter,
+                painter = OreIcons.Close.painter,
                 contentDescription = null,
                 modifier = Modifier.size(8.px)
             )
             Spacer(Modifier.size(8.px))
             Label(
                 mcFormat {
-                    "Cdm's".blue.underline.italic .. " »" .. ("测".dark_red.bold + "试".gold) .. "服".dark_green .. "务".dark_blue .. "器".light_purple .. ".".dark_purple
+                    "Cdm's".blue.underline.italic .. " »" .. ("测".dark_red + "试".gold).bold .. "服".dark_green .. "务".dark_blue .. "器".light_purple .. ".".dark_purple
                 },
                 showFormatMark = showMark
             )
