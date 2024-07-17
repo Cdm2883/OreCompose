@@ -3,23 +3,22 @@ android-gradle-plugin = "8.2.0"
 android-sdk-compile = "34"
 android-sdk-min = "24"
 android-sdk-target = "34"
-kotlin = "1.9.22"
-compose = "1.6.2"
-compose-plugin = "1.6.0"
+kotlin = "2.0.0"
+compose-plugin = "1.6.11"
 jetbrains-dokka = "1.9.20"
 vanniktech-maven-publish = "0.28.0"
 
-androidx-activity-compose = "1.8.2"
+androidx-activity-compose = "1.9.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
-jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "jetbrains-dokka" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "jetbrains-dokka" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-maven-publish" }

@@ -89,7 +89,7 @@ fun CharSequence.mcFormat(showMark: Boolean = false, defaultColor: Color = 0xfff
         
         if (buffer[0] == SS) withStyle(style.copy((color ?: defaultColor).copy(.5f))) {
             append(buffer.substring(0, 2))
-            buffer.delete(0, 2)
+            buffer.deleteRange(0, 2)
         }
         
 //        if (obfuscated) {
