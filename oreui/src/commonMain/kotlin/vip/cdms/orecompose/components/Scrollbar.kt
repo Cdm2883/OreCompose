@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -48,28 +49,32 @@ fun VerticalScrollbar(
 ) {
     val ps = LocalPixelSize.current.toPx()
     
-    var height by remember { mutableFloatStateOf(0f) }
-    val thumbHeight = height.toDp() * (state.viewportSize.toFloat() / state.maxValue)
-    val thumbOffset = (height.toDp() - thumbHeight) * (state.value.toFloat() / state.maxValue)
+    var viewHeight by remember { mutableFloatStateOf(state.viewportSize.toFloat().takeIf { it != 0f } ?: Float.MAX_VALUE) }
+    val contentHeight = state.maxValue + viewHeight
+    val shouldShow = viewHeight < contentHeight
+
+    val scrollbarHeight = if (shouldShow) (viewHeight * (viewHeight / contentHeight)).coerceAtLeast(10.dp.toPx()) else Float.NaN
+    val variableZone = if (shouldShow) viewHeight - scrollbarHeight else Float.NaN
+    val scrollbarOffsetY = if (shouldShow) (state.value.toFloat() / state.maxValue) * variableZone else Float.NaN
     
     val draggableState = rememberDraggableState {
-        GlobalScope.launch { state.scrollBy(it * 2 * ps) }
+        GlobalScope.launch { state.scrollBy(it) }
     }
-    
+
     Box(modifier) {
         Spacer(
             Modifier
                 .width((1.5f).px)
                 .fillMaxHeight()
                 .align(Alignment.Center)
-                .background(palette.track)
-                .onGloballyPositioned { height = it.boundsInParent().height }
+                .onGloballyPositioned { viewHeight = it.boundsInParent().height }
+                .run { if (shouldShow) background(palette.track) else this }
         )
-        Button(
+        if (shouldShow) Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(thumbHeight)
-                .offset(y = thumbOffset)
+                .height(scrollbarHeight.toDp())
+                .offset(y = scrollbarOffsetY.toDp())
                 .outline()
                 .drawBehind {
                     drawRect(palette.thumbShadow, Offset(-ps, size.height + ps), size.offset(width = 2 * ps).copy(height = ps))
