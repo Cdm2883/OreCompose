@@ -1,6 +1,5 @@
 package vip.cdms.orecompose.example
 
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,11 +13,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import vip.cdms.orecompose.components.*
 import vip.cdms.orecompose.effect.outline
 import vip.cdms.orecompose.effect.sound
-import vip.cdms.orecompose.layout.ExperimentalPanoramaApi
-import vip.cdms.orecompose.layout.PanoramaViewer
-import vip.cdms.orecompose.style.*
-import vip.cdms.orecompose.utils.*
-import kotlin.time.Duration.Companion.milliseconds
+import vip.cdms.orecompose.style.Bold
+import vip.cdms.orecompose.style.OreButtonStyles
+import vip.cdms.orecompose.style.OreIcons
+import vip.cdms.orecompose.style.px
+import vip.cdms.orecompose.utils.buildPixelIcon
+import vip.cdms.orecompose.utils.mcFormat
+import vip.cdms.orecompose.utils.painter
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
@@ -30,7 +31,7 @@ fun App() {
     @Composable
     fun Content() {
         
-        Label("Hello, ${getPlatform()}!")
+        Label("Hello, ${getPlatform().message}!")
         
         Image(
             painter = buildPixelIcon(10) {
@@ -94,12 +95,8 @@ fun App() {
 //        
     }
     
-    
-    
-    OreTheme {
-        Box {
-            PanoramaBackground()
-
+    OreComposeExampleTheme {
+        PanoramaBackground {
             val scrollState = rememberScrollState()
             Column(
                 Modifier
@@ -124,21 +121,4 @@ fun App() {
         }
     }
 
-}
-
-// prevent recompose others too often
-@OptIn(ExperimentalPanoramaApi::class)
-@Composable
-fun PanoramaBackground() {
-    val yaw by tickFloat(
-        begin = 0.8f,
-        end = 5.5f,
-        step = 0.01f,
-        ticker = { tickerFlow(500.milliseconds) },
-        repeatMode =  RepeatMode.Reverse
-    )
-    PanoramaViewer(
-        yaw = yaw,
-        modifier = Modifier.fillMaxSize()
-    )
 }

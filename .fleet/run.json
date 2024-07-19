@@ -1,0 +1,11 @@
+{
+    "configurations": [
+       {
+           "type": "gradle",
+           "name": "Preview Example Website with Kotlin/Wasm",
+           "tasks": [
+               "wasmJsBrowserRun"
+           ],
+       },
+    ]
+}

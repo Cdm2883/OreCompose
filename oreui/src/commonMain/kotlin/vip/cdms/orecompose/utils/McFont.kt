@@ -2,7 +2,6 @@ package vip.cdms.orecompose.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -14,7 +13,6 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
 
 @Suppress("SpellCheckingInspection")
-@OptIn(ExperimentalResourceApi::class)
 val Monocraft
     @Composable
     get() = FontFamily(Font(Res.font.monocraft_no_ligatures_v3_0))

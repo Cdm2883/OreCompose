@@ -1,3 +1,3 @@
 package vip.cdms.orecompose.example
 
-actual fun getPlatform() = "Web with Kotlin/Wasm"
+actual fun getPlatform(): Platform = Platform.WasmJs("Web with Kotlin/Wasm")
