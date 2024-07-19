@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 rootProject.name = "OreCompose"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -33,7 +35,6 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        gradlePluginPortal()
     }
 }
 

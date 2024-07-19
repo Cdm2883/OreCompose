@@ -16,6 +16,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser {}
+        generateTypeScriptDefinitions()
     }
 
     androidTarget {

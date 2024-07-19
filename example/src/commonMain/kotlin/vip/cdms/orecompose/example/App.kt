@@ -1,7 +1,7 @@
 package vip.cdms.orecompose.example
 
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,11 +14,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import vip.cdms.orecompose.components.*
 import vip.cdms.orecompose.effect.outline
 import vip.cdms.orecompose.effect.sound
+import vip.cdms.orecompose.layout.ExperimentalPanoramaApi
+import vip.cdms.orecompose.layout.PanoramaViewer
 import vip.cdms.orecompose.style.*
-import vip.cdms.orecompose.utils.argb
-import vip.cdms.orecompose.utils.buildPixelIcon
-import vip.cdms.orecompose.utils.mcFormat
-import vip.cdms.orecompose.utils.painter
+import vip.cdms.orecompose.utils.*
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
@@ -75,8 +75,6 @@ fun App() {
         ShowButtons(OreButtonStyles.Purple)
         ShowButtons(OreButtonStyles.Red)
         
-        Divider()
-        
         var showMark by remember { mutableStateOf(false) }
         Button({ showMark = !showMark }, Modifier.outline().sound()/*.animateContentSize()*/) {
             Icon(
@@ -99,40 +97,48 @@ fun App() {
     
     
     OreTheme {
-        Row(
-            Modifier.fillMaxSize().background(0xff181818.argb),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Box {
+            PanoramaBackground()
 
             val scrollState = rememberScrollState()
-
-            Box(Modifier.height(120.px).background(0xff313233.argb)) {
-
+            Column(
+                Modifier
+                    .fillMaxHeight()
+                    .verticalScroll(scrollState)
+                    .padding(vertical = 8.px),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Column(
-                    Modifier
-                        .fillMaxHeight()
-                        .verticalScroll(scrollState)
-                        .padding(vertical = 8.px),
-                    verticalArrangement = Arrangement.Center,
+                    Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.px),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(8.px),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Content()
-                    }
+                    Content()
                 }
-
-                VerticalScrollbar(
-                    modifier = ScrollbarDefaults.VerticalModifier.align(Alignment.CenterEnd),
-                    state = scrollState
-                )
-
             }
-
+            VerticalScrollbar(
+                modifier = ScrollbarDefaults.VerticalModifier.align(Alignment.CenterEnd),
+                state = scrollState
+            )
         }
     }
-    
+
+}
+
+// prevent recompose others too often
+@OptIn(ExperimentalPanoramaApi::class)
+@Composable
+fun PanoramaBackground() {
+    val yaw by tickFloat(
+        begin = 0.8f,
+        end = 5.5f,
+        step = 0.01f,
+        ticker = { tickerFlow(500.milliseconds) },
+        repeatMode =  RepeatMode.Reverse
+    )
+    PanoramaViewer(
+        yaw = yaw,
+        modifier = Modifier.fillMaxSize()
+    )
 }
