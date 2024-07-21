@@ -35,7 +35,7 @@ fun PanoramaBackground(content: @Composable BoxScope.() -> Unit) {
 @Composable
 fun PanoramaBackground() {
     val yaw by if (getPlatform() is Platform.WasmJs)
-        remember { mutableFloatStateOf(1f) }  // TODO wait for three.js support
+        remember { mutableFloatStateOf((8..55).random() * 0.1f) }  // TODO wait for three.js support
     else tickFloat(
         begin = 0.8f,
         end = 5.5f,

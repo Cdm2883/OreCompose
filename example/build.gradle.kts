@@ -52,6 +52,8 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.jetbrains.androidx.navigation.compose)
+            implementation(libs.chrisbanes.material3.window.size)
             
             implementation(project(":oreui"))
         }

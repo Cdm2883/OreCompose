@@ -1,28 +1,31 @@
 package vip.cdms.orecompose.components
 
+import androidx.compose.foundation.Indication
+import androidx.compose.foundation.IndicationInstance
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.LocalTextStyle
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import vip.cdms.orecompose.effect.*
 import vip.cdms.orecompose.style.*
-import vip.cdms.orecompose.utils.offset
-import vip.cdms.orecompose.utils.square
-import vip.cdms.orecompose.utils.toPx
-import vip.cdms.orecompose.utils.zero
+import vip.cdms.orecompose.utils.*
 import kotlin.math.min
 
 data class ButtonStyle(
@@ -98,9 +101,7 @@ fun Button(
     CompositionLocalProvider(
         LocalSoundEffect provides (style.sound ?: { LocalSoundEffect.current }).invoke(),
         
-        LocalTextStyle provides LocalTextStyle.current.copy(
-            fontSize = with(LocalDensity.current) { 9.px.toSp() }
-        ).run { style.textStyle(this) },
+        LocalTextStyle edit { copy(fontSize = OreTexts.Content).run { style.textStyle(this) } },
         LocalContentColor provides (style.text ?: LocalContentColor.current),
         LocalOutlineColor provides (style.outline ?: LocalOutlineColor.current),
     ) {
@@ -125,6 +126,26 @@ fun Button(
                 verticalAlignment = Alignment.CenterVertically,
                 content
             )
+        }
+    }
+}
+
+val MonotoneIndication by lazy {
+    object : Indication {
+        @Composable
+        override fun rememberUpdatedInstance(interactionSource: InteractionSource): IndicationInstance {
+            val hovered by interactionSource.collectIsHoveredAsState()
+            val pressed by interactionSource.collectIsPressedAsState()
+            return object : IndicationInstance {
+                override fun ContentDrawScope.drawIndication() {
+                    if (pressed) {
+                        drawRect(0x11000000.argb)
+                    } else if (hovered) {
+                        drawRect(0x77ffffff.argb)
+                    }
+                    drawContent()
+                }
+            }
         }
     }
 }

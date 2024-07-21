@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 
 @Composable
 fun Dp.toPx() = with(LocalDensity.current) { toPx() }
@@ -15,6 +16,10 @@ fun Dp.toPx() = with(LocalDensity.current) { toPx() }
 fun Int.toDp() = with(LocalDensity.current) { toDp() }
 @Composable
 fun Float.toDp() = with(LocalDensity.current) { toDp() }
+@Composable
+fun Dp.toSp() = with(LocalDensity.current) { toSp() }
+@Composable
+fun TextUnit.toDp() = with(LocalDensity.current) { toDp() }
 
 fun Size.Companion.square(width: Float) = Size(width, width)
 fun Size.offset(width: Float = 0f, height: Float = 0f) = copy(this.width + width, this.height + height)

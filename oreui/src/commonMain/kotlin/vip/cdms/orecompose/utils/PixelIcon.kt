@@ -1,6 +1,7 @@
 package vip.cdms.orecompose.utils
 
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -119,12 +120,14 @@ class PixelPainter(
 ) : Painter() {
     override val intrinsicSize = IntSize(width, height).toSize()
     fun DrawScope.drawPixels(ps: Float, offset: Offset) {
+        val paint = newPixelPaint()
         val block = Size.square(ps)
         for (y in 0 until height)
             for (x in 0 until width) {
                 val color = pixels[y * width + x]
                 val pos = offset.offset(x * ps, y * ps)
-                drawRect(color, pos, block)
+                paint.color = color
+                drawContext.canvas.drawRect(Rect(pos, block), paint)
             }
     }
     override fun DrawScope.onDraw() {

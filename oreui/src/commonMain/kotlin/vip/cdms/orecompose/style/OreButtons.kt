@@ -173,12 +173,16 @@ object OreButtonPaddings {
     val Common: PaddingValues
         @Composable
         get() = PaddingValues(horizontal = 10.px, vertical = 6.px)
-//    val Compact: PaddingValues = TODO()
+    val Compact: PaddingValues
+        @Composable
+        get() = PaddingValues(horizontal = 11.px, vertical = 6.px)
 }
 
 object OreButtonSizes {
     val Common: DpRangeSize
         @Composable
         get() = DpRangeSize(minHeight = 28.px)
-//    val Compact: RangeSize = TODO()
+    val Compact: DpRangeSize
+        @Composable
+        get() = DpRangeSize(minHeight =  21.px)
 }
