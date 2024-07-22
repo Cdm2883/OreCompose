@@ -19,6 +19,8 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import vip.cdms.orecompose.effect.*
@@ -114,6 +116,7 @@ fun Toggle(
             Modifier
                 .width(28.px)
                 .height(14.px)
+                .run { if (enabled) pointerHoverIcon(PointerIcon.Hand) else this }
                 .then(
                     if (onCheckedChange != null) Modifier.toggleable(
                         value = checked,

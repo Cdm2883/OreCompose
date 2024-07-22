@@ -4,10 +4,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import orecompose.example.generated.resources.Res
 import orecompose.example.generated.resources.logo
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,

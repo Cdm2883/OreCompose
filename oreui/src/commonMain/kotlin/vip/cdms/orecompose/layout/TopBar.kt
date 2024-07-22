@@ -19,6 +19,8 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -33,7 +35,7 @@ import vip.cdms.orecompose.style.OreTexts
 import vip.cdms.orecompose.style.px
 import vip.cdms.orecompose.utils.*
 
-val TopBarLargeHeight @Composable get() = 28.px
+val TopBarLargeHeight @Composable get() = 27.px
 
 @Composable
 fun TopBar(
@@ -121,6 +123,7 @@ fun TopBarNavigationButton(
                 onClick = onClick
             )
             .aspectRatio(1f, true)
+            .run { if (enabled) pointerHoverIcon(PointerIcon.Hand) else this }
             .padding(contentPadding),
         contentAlignment = Alignment.Center
     ) {
@@ -164,8 +167,9 @@ fun TopBarActionButton(
                 enabled = enabled,
                 onClick = onClick
             )
-            .padding(horizontal = 9.px)
-            .padding(end = 1.px, bottom = 1.px),
+            .padding(end = 1.px, bottom = 1.px)
+            .run { if (enabled) pointerHoverIcon(PointerIcon.Hand) else this }
+            .padding(horizontal = 9.px),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

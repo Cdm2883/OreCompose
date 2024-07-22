@@ -22,6 +22,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.TextStyle
 import vip.cdms.orecompose.effect.*
 import vip.cdms.orecompose.style.*
@@ -117,6 +119,7 @@ fun Button(
                         enabled = enabled,
                         onClick = onClick
                     )
+                    .run { if (enabled) pointerHoverIcon(PointerIcon.Hand) else this }
                     .padding(contentPadding),
             Alignment.Center
         ) {
