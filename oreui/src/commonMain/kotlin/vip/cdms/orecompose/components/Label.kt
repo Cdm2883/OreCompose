@@ -83,7 +83,7 @@ fun Label(
     )
     
     @Suppress("SpellCheckingInspection") val monocraft = Monocraft
-    LaunchedEffect(textLayoutResult) {
+    remember(textLayoutResult) {
         textLayoutResult?.let {
             onDrawObfuscated = {
                 for ((index, fragment) in obfuscatedIndexes) {

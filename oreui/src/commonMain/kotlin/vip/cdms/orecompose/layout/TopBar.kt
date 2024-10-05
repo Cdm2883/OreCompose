@@ -58,15 +58,7 @@ fun TopBar(
                 // 无法画到最顶层
                 // drawRect(0x55000000.argb, Offset.zero(y = size.height + 3 * ps), size.copy(height = ps))
             }
-            .onGloballyPositioned { coordinates ->
-                val position = coordinates.positionInRoot()
-                boundingBox = Rect(
-                    left = position.x,
-                    top = position.y,
-                    right = position.x + coordinates.size.width,
-                    bottom = position.y + coordinates.size.height
-                )
-            },
+            .onGloballyPositioned { boundingBox = it.warpRect { positionInRoot() } },
         contentAlignment = Alignment.Center
     ) {
         CompositionLocalProvider(

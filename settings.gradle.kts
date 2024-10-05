@@ -35,8 +35,10 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven("https://jitpack.io")
     }
 }
 
 include(":oreui")
+include(":oreui-panorama")
 include(":example")

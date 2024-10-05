@@ -34,17 +34,17 @@ fun PanoramaBackground(content: @Composable BoxScope.() -> Unit) {
 @OptIn(ExperimentalPanoramaApi::class)
 @Composable
 fun PanoramaBackground() {
-    val yaw by if (getPlatform() !is Platform.Desktop)
-        remember { mutableFloatStateOf((8..55).random() * 0.1f) }  // TODO wait for three.js support
-    else tickFloat(
-        begin = 0.8f,
-        end = 5.5f,
-        step = 0.01f,
-        ticker = { tickerFlow(500.milliseconds) },
-        repeatMode =  RepeatMode.Reverse
-    )
+//    val yaw by if (getPlatform() !is Platform.Desktop)
+//        remember { mutableFloatStateOf((8..55).random() * 0.1f) }  // TODO wait for three.js support
+//    else tickFloat(
+//        begin = 0.8f,
+//        end = 5.5f,
+//        step = 0.01f,
+//        ticker = { tickerFlow(500.milliseconds) },
+//        repeatMode =  RepeatMode.Reverse
+//    )
     PanoramaViewer(
-        yaw = yaw,
-        modifier = Modifier.fillMaxSize().background(0xff161616.argb)
+//        yaw = yaw,
+//        modifier = Modifier.fillMaxSize().background(0xff161616.argb)
     )
 }

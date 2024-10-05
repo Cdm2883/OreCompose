@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.drawscope.DrawScope.Companion.DefaultFilterQ
 import androidx.compose.ui.layout.ContentScale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import orecompose.oreui.generated.resources.Res
-import orecompose.oreui.generated.resources.panorama
+import orecompose.oreui_panorama.generated.resources.Res
+import orecompose.oreui_panorama.generated.resources.panorama
 import org.jetbrains.compose.resources.imageResource
 import vip.cdms.orecompose.utils.*
 import kotlin.math.*
@@ -62,9 +62,17 @@ val PanoramaCache = mutableMapOf<String, ImageBitmap>()
  * print("Panorama image saved at: " + out_path)
  * ```
  */
+@ExperimentalPanoramaApi
+@Composable
+expect fun PanoramaViewer(
+    equirectangular: ImageBitmap = imageResource(Res.drawable.panorama),
+    modifier: Modifier = Modifier.fillMaxSize().background(0xff161616.argb),
+    mask: Modifier? = Modifier.fillMaxSize().background(0x01000000.argb),
+)
+
 @ExperimentalPanoramaApi  // TODO 不同平台使用不同方案以优化性能 (web -> three.js ...)
 @Composable
-fun PanoramaViewer(
+fun PanoramaViewer0(
     equirectangular: ImageBitmap = imageResource(Res.drawable.panorama),
     yaw: Float = 0f,
     pitch: Float = 0f,
@@ -112,7 +120,7 @@ fun viewPanorama(
 ): ImageBitmap {
     val hash = "${equirectangular.hashCode()},${yaw},${pitch},${fov},${width},${height}"
     if (cache.contains(hash)) return cache[hash]!!
-    
+
     val equirectangularPixelMap = equirectangular.toPixelMap()
     val perspectiveBitmap = ImageBitmap(width, height)
     val canvas = Canvas(perspectiveBitmap)
@@ -121,7 +129,7 @@ fun viewPanorama(
     val halfWidth = width / 2
     val halfHeight = height / 2
     val focalLength = halfWidth / tan(fov / 2)
-    
+
     for (x in 0 until width) {
         for (y in 0 until height) {
             val dx = (x - halfWidth).toFloat()
@@ -142,7 +150,7 @@ fun viewPanorama(
             canvas.drawPixel(x.toFloat(), y.toFloat(), paint)
         }
     }
-    
+
     canvas.save()
     cache[hash] = perspectiveBitmap
     return perspectiveBitmap
@@ -171,20 +179,20 @@ fun convertCubemapToEquirectangular(
     val output = ImageBitmap(width, height)
     val canvas = Canvas(output)
     val paint = newPixelPaint()
-    
+
     val frontData = front.toPixelMap()
     val backData = back.toPixelMap()
     val leftData = left.toPixelMap()
     val rightData = right.toPixelMap()
     val topData = top.toPixelMap()
     val bottomData = bottom.toPixelMap()
-    
+
     fun sampleCubemapFace(data: PixelMap, faceSize: Int, u: Float, v: Float): Color {
         val x = ((u + 1) / 2 * (faceSize - 1)).toInt().coerceIn(0, faceSize - 1)
         val y = ((v + 1) / 2 * (faceSize - 1)).toInt().coerceIn(0, faceSize - 1)
         return data[x, y]
     }
-    
+
     fun equirectangularToCubemap(
         theta: Float,
         phi: Float,
@@ -193,17 +201,17 @@ fun convertCubemapToEquirectangular(
         val x = cos(phi) * cos(theta)
         val y = sin(phi)
         val z = cos(phi) * sin(theta)
-        
+
         return when {
             abs(x) >= abs(y) && abs(x) >= abs(z) -> if (x > 0) sampleCubemapFace(rightData, faceSize, -z / x, y / x)
-                                                    else sampleCubemapFace(leftData, faceSize, z / x, y / x)
+            else sampleCubemapFace(leftData, faceSize, z / x, y / x)
             abs(y) >= abs(x) && abs(y) >= abs(z) -> if (y > 0) sampleCubemapFace(topData, faceSize, x / y, -z / y)
-                                                    else sampleCubemapFace(bottomData, faceSize, x / y, z / y)
+            else sampleCubemapFace(bottomData, faceSize, x / y, z / y)
             else -> if (z > 0) sampleCubemapFace(frontData, faceSize, x / z, y / z)
-                    else sampleCubemapFace(backData, faceSize, -x / z, y / z)
+            else sampleCubemapFace(backData, faceSize, -x / z, y / z)
         }
     }
-    
+
     for (y in 0 until height) {
         val phi = PI * (y.toFloat() / height - 0.5f)
         for (x in 0 until width) {
@@ -213,7 +221,7 @@ fun convertCubemapToEquirectangular(
             canvas.drawPixel(x.toFloat(), y.toFloat(), paint)
         }
     }
-    
+
     canvas.save()
     return output
 }

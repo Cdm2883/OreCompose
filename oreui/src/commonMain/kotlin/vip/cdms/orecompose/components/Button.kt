@@ -1,12 +1,7 @@
 package vip.cdms.orecompose.components
 
-import androidx.compose.foundation.Indication
-import androidx.compose.foundation.IndicationInstance
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.InteractionSource
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
-import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.LocalTextStyle
@@ -25,6 +20,10 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.TextStyle
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import vip.cdms.orecompose.effect.*
 import vip.cdms.orecompose.style.*
 import vip.cdms.orecompose.utils.*
@@ -59,6 +58,7 @@ object ButtonDefaults {
     val ContentPadding @Composable get() = OreButtonPaddings.Common
 }
 
+@OptIn(ExperimentalFoundationApi::class, DelicateCoroutinesApi::class)
 @Composable
 fun Button(
     onClick: () -> Unit = {},
@@ -117,7 +117,15 @@ fun Button(
                         interactionSource,
                         indication = null,
                         enabled = enabled,
-                        onClick = onClick
+                        onClick = {
+                            onClick()
+                            if (currentPlatform == Platform.Android) GlobalScope.launch {
+                                val press = PressInteraction.Press(Offset.Unspecified)
+                                interactionSource.emit(press)
+                                delay(50)
+                                interactionSource.emit(PressInteraction.Release(press))
+                            }
+                        }
                     )
                     .run { if (enabled) pointerHoverIcon(PointerIcon.Hand) else this }
                     .padding(contentPadding),

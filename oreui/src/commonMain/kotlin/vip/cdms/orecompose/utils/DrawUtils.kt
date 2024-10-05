@@ -6,9 +6,22 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+
+//context(LayoutCoordinates)
+//fun Offset.warpRect() {}
+fun LayoutCoordinates.warpRect(getPosition: LayoutCoordinates.() -> Offset) =
+    getPosition().let { position ->
+        Rect(
+            left = position.x,
+            top = position.y,
+            right = position.x + size.width,
+            bottom = position.y + size.height
+        )
+    }
 
 @Composable
 fun Dp.toPx() = with(LocalDensity.current) { toPx() }

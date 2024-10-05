@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.chrisbanes.material3.window.size)
             
             implementation(project(":oreui"))
+            implementation(project(":oreui-panorama"))
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
