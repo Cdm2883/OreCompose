@@ -1,0 +1,18 @@
+### IntelliJ IDEA ###
+.idea/modules
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/kotlinc.xml
+.idea/libraries/
+.idea/artifacts
+.idea/*.iml
+.idea/misc.xml
+
+### Kotlin ###
+/.kotlin
+
+### Gradle ###
+.gradle
+build/
+local.properties

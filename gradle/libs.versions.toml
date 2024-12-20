@@ -1,5 +1,18 @@
 [versions]
+orecompose-lib-version = "0.0.1-alpha"
+
+android-gradle-plugin = "8.5.2"
+android-sdk-compile = "35"
+android-sdk-min = "24"
+android-sdk-target = "34"
+compose-multiplatform = "1.7.1"
+kotlin = "2.1.0"
 
 [libraries]
 
 [plugins]
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
