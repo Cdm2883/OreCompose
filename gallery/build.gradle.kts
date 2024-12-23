@@ -1,3 +1,4 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -58,6 +59,9 @@ kotlin {
             implementation(projects.oreui)
 //            implementation(projects.oreuiPanorama)
         }
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+        }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
         }
@@ -75,6 +79,7 @@ android {
     defaultConfig {
         applicationId = "vip.cdms.orecompose.gallery"
         minSdk = libs.versions.android.sdk.min.get().toInt()
+        targetSdk = libs.versions.android.sdk.target.get().toInt()
     }
     packaging {
         resources {
@@ -90,4 +95,13 @@ android {
     }
 }
 
-compose.desktop {}
+compose.desktop {
+    application {
+        mainClass = "vip.cdms.orecompose.gallery.MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "Inspire"
+        }
+    }
+}

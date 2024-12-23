@@ -2,13 +2,16 @@
 orecompose-lib-version = "0.0.1-alpha"
 
 android-gradle-plugin = "8.5.2"
-android-sdk-compile = "35"
+android-sdk-compile = "34"
 android-sdk-min = "24"
 android-sdk-target = "34"
 compose-multiplatform = "1.7.1"
 kotlin = "2.1.0"
 
+androidx-activity-compose = "1.9.3"
+
 [libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
