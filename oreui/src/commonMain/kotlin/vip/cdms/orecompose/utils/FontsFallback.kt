@@ -12,7 +12,8 @@ typealias FontFamilyFallback = Pair<FontFamily, (Char) -> Boolean>
 val LocalFontsFallback = staticCompositionLocalOf<Array<FontFamilyFallback>?> { null }
 
 @Composable
-fun CharSequence.localFontsFallback() = LocalFontsFallback.current?.let { fontsFallback(*it) }
+fun CharSequence.localFontsFallback() = LocalFontsFallback.current
+    ?.takeIf { isNotEmpty() }?.let { fontsFallback(*it) }
     ?: if (this is AnnotatedString) this else AnnotatedString(this.toString())
 
 fun CharSequence.fontsFallback(vararg fonts: FontFamilyFallback) =
@@ -21,6 +22,8 @@ fun CharSequence.fontsFallback(vararg fonts: FontFamilyFallback) =
 fun CharSequence.charStyle(vararg styles: Pair<SpanStyle, (Char) -> Boolean>) = buildAnnotatedString {
     val text = this@charStyle
     var i = 0
+    // too slow... but there's no another way to fallback multi-fonts
+    // unless rewrite the whole compose text.
     while (i < text.length) {
         val char = text[i]
         if (char.code in 0xd800..0xdbff) {

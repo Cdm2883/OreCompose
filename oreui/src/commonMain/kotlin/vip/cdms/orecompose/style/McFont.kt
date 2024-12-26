@@ -32,5 +32,8 @@ object MinecraftAsciiFont {
         233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243,
         244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 8364,
         9786, 9787, 9829)
-    fun hasGlyph(c: Char) = c.code in Glyphs
+    @Suppress("NOTHING_TO_INLINE")
+    inline fun hasGlyph(c: Char) = c.code in Glyphs
 }
+
+// TODO: bold font like title
