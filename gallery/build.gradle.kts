@@ -57,7 +57,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(projects.oreui)
-//            implementation(projects.oreuiPanorama)
+            implementation(projects.oreuiPanorama)
         }
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
@@ -101,7 +101,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "Inspire"
+            packageName = "OreCompose Gallery"
         }
     }
 }
