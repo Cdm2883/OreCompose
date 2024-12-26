@@ -1,12 +1,12 @@
 package vip.cdms.orecompose.utils
 
-@Suppress("MemberVisibilityCanBePrivate", "ConstPropertyName", "unused", "SpellCheckingInspection")
+@Suppress("MemberVisibilityCanBePrivate", "ConstPropertyName", "unused", "SpellCheckingInspection", "NOTHING_TO_INLINE")
 object McFormatBuilderScope {
-    infix fun String.with(format: Char) = s(format) + this
+    inline infix fun String.with(format: Char) = s(format) + this
     fun String.attach(vararg format: Char) = SS + format.joinToString(SS.toString()) + this
     infix fun String.with(format: String) = attach(*format.toCharArray())
 
-    fun s(format: Char) = SS + format.toString()
+    inline fun s(format: Char) = SS + format.toString()
 
     const val black              = '0'
     const val dark_blue          = '1'
@@ -44,42 +44,42 @@ object McFormatBuilderScope {
     const val clear         = 'r'
 
     fun String.clear() = with(clear)
-    val String.black              get() = with('0')
-    val String.dark_blue          get() = with('1')
-    val String.dark_green         get() = with('2')
-    val String.dark_aqua          get() = with('3')
-    val String.dark_red           get() = with('4')
-    val String.dark_purple        get() = with('5')
-    val String.gold               get() = with('6')
-    val String.gray               get() = with('7')
-    val String.dark_gray          get() = with('8')
-    val String.blue               get() = with('9')
-    val String.green              get() = with('a')
-    val String.aqua               get() = with('b')
-    val String.red                get() = with('c')
-    val String.light_purple       get() = with('d')
-    val String.yellow             get() = with('e')
-    val String.white              get() = with('f')
-    val String.minecoin_gold      get() = with('g')
-    val String.material_quartz    get() = with('h')
-    val String.material_iron      get() = with('i')
-    val String.material_netherite get() = with('j')
-//    val String.material_redstone  get() = with('m')
-//    val String.material_copper    get() = with('n')
-    val String.material_gold      get() = with('p')
-    val String.material_emerald   get() = with('q')
-    val String.material_diamond   get() = with('s')
-    val String.material_lapis     get() = with('t')
-    val String.material_amethyst  get() = with('u')
+    val String.black              inline get() = with(this@McFormatBuilderScope.black)
+    val String.dark_blue          inline get() = with(this@McFormatBuilderScope.dark_blue)
+    val String.dark_green         inline get() = with(this@McFormatBuilderScope.dark_green)
+    val String.dark_aqua          inline get() = with(this@McFormatBuilderScope.dark_aqua)
+    val String.dark_red           inline get() = with(this@McFormatBuilderScope.dark_red)
+    val String.dark_purple        inline get() = with(this@McFormatBuilderScope.dark_purple)
+    val String.gold               inline get() = with(this@McFormatBuilderScope.gold)
+    val String.gray               inline get() = with(this@McFormatBuilderScope.gray)
+    val String.dark_gray          inline get() = with(this@McFormatBuilderScope.dark_gray)
+    val String.blue               inline get() = with(this@McFormatBuilderScope.blue)
+    val String.green              inline get() = with(this@McFormatBuilderScope.green)
+    val String.aqua               inline get() = with(this@McFormatBuilderScope.aqua)
+    val String.red                inline get() = with(this@McFormatBuilderScope.red)
+    val String.light_purple       inline get() = with(this@McFormatBuilderScope.light_purple)
+    val String.yellow             inline get() = with(this@McFormatBuilderScope.yellow)
+    val String.white              inline get() = with(this@McFormatBuilderScope.white)
+    val String.minecoin_gold      inline get() = with(this@McFormatBuilderScope.minecoin_gold)
+    val String.material_quartz    inline get() = with(this@McFormatBuilderScope.material_quartz)
+    val String.material_iron      inline get() = with(this@McFormatBuilderScope.material_iron)
+    val String.material_netherite inline get() = with(this@McFormatBuilderScope.material_netherite)
+//    val String.material_redstone  inline get() = with(this@McFormatBuilderScope.material_redstone)
+//    val String.material_copper    inline get() = with(this@McFormatBuilderScope.material_copper)
+    val String.material_gold      inline get() = with(this@McFormatBuilderScope.material_gold)
+    val String.material_emerald   inline get() = with(this@McFormatBuilderScope.material_emerald)
+    val String.material_diamond   inline get() = with(this@McFormatBuilderScope.material_diamond)
+    val String.material_lapis     inline get() = with(this@McFormatBuilderScope.material_lapis)
+    val String.material_amethyst  inline get() = with(this@McFormatBuilderScope.material_amethyst)
 
-    val String.obfuscated    get() = with('k')
-    val String.bold          get() = with('l')
-    val String.strikethrough get() = with('m')
-    val String.underline     get() = with('n')
-    val String.italic        get() = with('o')
+    val String.obfuscated    inline get() = with(this@McFormatBuilderScope.obfuscated)
+    val String.bold          inline get() = with(this@McFormatBuilderScope.bold)
+    val String.strikethrough inline get() = with(this@McFormatBuilderScope.strikethrough)
+    val String.underline     inline get() = with(this@McFormatBuilderScope.underline)
+    val String.italic        inline get() = with(this@McFormatBuilderScope.italic)
 
-    // Mimic connecting symbols (e.g. PHP)
-    operator fun String.rangeTo(string: String) = this + SS + "r" + string
+    // mimic connecting symbols (e.g. PHP)
+    inline operator fun String.rangeTo(string: String) = this + SS + clear + string
 }
 
 const val SS = '§'
