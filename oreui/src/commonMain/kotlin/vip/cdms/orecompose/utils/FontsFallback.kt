@@ -17,7 +17,7 @@ fun CharSequence.localFontsFallback() = LocalFontsFallback.current
     ?: if (this is AnnotatedString) this else AnnotatedString(this.toString())
 
 fun CharSequence.fontsFallback(vararg fonts: FontFamilyFallback) =
-    charStyle(*fonts.map { SpanStyle(fontFamily = it.first) to it.second }.toTypedArray())
+    charStyle(*Array(fonts.size) { i -> SpanStyle(fontFamily = fonts[i].first) to fonts[i].second })
 
 fun CharSequence.charStyle(vararg styles: Pair<SpanStyle, (Char) -> Boolean>) = buildAnnotatedString {
     val text = this@charStyle
