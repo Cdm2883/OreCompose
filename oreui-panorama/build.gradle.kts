@@ -32,6 +32,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.components.resources)
+            implementation(projects.oreui)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.common)

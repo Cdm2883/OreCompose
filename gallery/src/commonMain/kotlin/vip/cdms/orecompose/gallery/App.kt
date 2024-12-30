@@ -6,6 +6,7 @@ import androidx.compose.material.ProvideTextStyle
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -15,6 +16,7 @@ import orecompose.gallery.generated.resources.HarmonyOS_Sans_SC_Regular
 import orecompose.gallery.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 import vip.cdms.orecompose.components.Label
+import vip.cdms.orecompose.layout.panorama.Panorama
 import vip.cdms.orecompose.style.OreTheme
 
 @Composable
@@ -28,8 +30,10 @@ fun App() {
                     .onGloballyPositioned { screenWidth = it.boundsInParent().width },
                 contentAlignment = Alignment.Center
             ) {
+                Panorama()
                 Label(
                     "OreCompose! 你好世界！",
+                    color = Color.White,
                     fontSize = LocalDensity.current.run { (screenWidth / 16).toSp() }
                 )
             }
