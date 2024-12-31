@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.imageResource
 import vip.cdms.orecompose.utils.drawPoint
@@ -24,11 +25,12 @@ import kotlin.time.Duration.Companion.nanoseconds
 fun PanoramaSoft(
     equirectangular: ImageBitmap = imageResource(PanoramaDefaults.Equirectangular),
     modifier: Modifier = PanoramaDefaults.Modifier,
+    rotating: Boolean = true,
+    width: Int = 1500,
+    height: Int = 750,
 ) {
     val pixels = remember { equirectangular.toPixelMap() }
     val paint = remember { pixelPaint() }
-
-    val (width, height) = 1500 to 750
     var image by remember { mutableStateOf<ImageBitmap?>(null) }
 
     val origin = remember { 35f * PI.toFloat() / 180 } // magic number
@@ -39,7 +41,7 @@ fun PanoramaSoft(
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.Unconfined) {
-            while (true) {
+            do {
                 val bitmap = ImageBitmap(width, height)
                 val canvas = Canvas(bitmap)
                 canvas.viewPanoramaSoft(
@@ -58,7 +60,7 @@ fun PanoramaSoft(
                 if (next > deg360 || next < origin) direction *= -1
                 else yaw = next
                 delay(1.nanoseconds)
-            }
+            } while (rotating && isActive)
         }
     }
 

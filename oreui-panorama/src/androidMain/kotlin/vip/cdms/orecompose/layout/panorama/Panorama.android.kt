@@ -8,4 +8,5 @@ import androidx.compose.ui.graphics.ImageBitmap
 actual fun Panorama(equirectangular: ImageBitmap, modifier: Modifier) {
     PanoramaSoft(equirectangular, modifier)
     // TODO: use gl
+actual fun Panorama(equirectangular: ImageBitmap, modifier: Modifier, rotating: Boolean) {
 }

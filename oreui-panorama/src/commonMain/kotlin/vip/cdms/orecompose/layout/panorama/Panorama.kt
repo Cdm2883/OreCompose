@@ -27,4 +27,5 @@ fun Modifier.foreground(color: Color) = drawWithContent {
 expect fun Panorama(
     equirectangular: ImageBitmap = imageResource(PanoramaDefaults.Equirectangular),
     modifier: Modifier = PanoramaDefaults.Modifier,
+    rotating: Boolean = true,
 )
