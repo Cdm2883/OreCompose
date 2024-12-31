@@ -5,13 +5,18 @@ android-gradle-plugin = "8.5.2"
 android-sdk-compile = "34"
 android-sdk-min = "24"
 android-sdk-target = "34"
-compose-multiplatform = "1.7.1"
+compose-multiplatform = "1.7.3"
 kotlin = "2.1.0"
 
 androidx-activity-compose = "1.9.3"
 
+mayakapps-compose-window-styler = "0.3.3-SNAPSHOT"
+
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+
+# gallery
+mayakapps-compose-window-styler = { module = "com.mayakapps.compose:window-styler", version.ref = "mayakapps-compose-window-styler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
