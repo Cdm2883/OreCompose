@@ -34,6 +34,10 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.oreui)
         }
+        androidMain.dependencies {
+            //noinspection UseTomlInstead
+            implementation("com.github.androidZzT:VRPanoramaView:1.0.1")
+        }
         jvmMain.dependencies {
             implementation(compose.desktop.common)
         }

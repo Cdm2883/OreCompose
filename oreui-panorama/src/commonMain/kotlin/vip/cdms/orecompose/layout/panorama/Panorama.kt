@@ -15,7 +15,7 @@ object PanoramaDefaults {
     val Equirectangular = Res.drawable.panorama_default
     val Modifier = androidx.compose.ui.Modifier
         .fillMaxSize()
-        .foreground(0x30000000.argb)
+        .foreground(0x55000000.argb)  // WTF, different platforms with different color ?!
 }
 
 fun Modifier.foreground(color: Color) = drawWithContent {
