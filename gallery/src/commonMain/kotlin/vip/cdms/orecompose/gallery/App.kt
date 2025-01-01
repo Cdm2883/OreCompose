@@ -17,11 +17,16 @@ import orecompose.gallery.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 import vip.cdms.orecompose.components.Label
 import vip.cdms.orecompose.layout.panorama.Panorama
+import vip.cdms.orecompose.layout.panorama.OrePanoramaModule
 import vip.cdms.orecompose.style.OreTheme
 
 @Composable
 fun App() {
-    OreTheme {
+    OreTheme(
+        modules = arrayOf(
+            OrePanoramaModule,
+        ),
+    ) {
         ProvideTextStyle(TextStyle(fontFamily = FontFamily(Font(Res.font.HarmonyOS_Sans_SC_Regular)))) {
             var screenWidth by remember { mutableStateOf(Float.MIN_VALUE) }
             Box(

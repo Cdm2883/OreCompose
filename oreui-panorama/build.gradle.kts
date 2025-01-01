@@ -34,14 +34,41 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.oreui)
         }
-        androidMain.dependencies {
-            //noinspection UseTomlInstead
-            implementation("com.github.androidZzT:VRPanoramaView:1.0.1")
+
+        val nonWebMain by creating {
+            dependsOn(commonMain.get())
         }
-        jvmMain.dependencies {
-            implementation(compose.desktop.common)
+        androidMain {
+            dependsOn(nonWebMain)
+            dependencies {
+                //noinspection UseTomlInstead
+                implementation("com.github.androidZzT:VRPanoramaView:1.0.1")
+            }
+        }
+        jvmMain {
+            dependsOn(nonWebMain)
+            dependencies {
+                implementation(compose.desktop.common)
+            }
+        }
+
+        val webMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.kilua.dom)
+            }
+        }
+        wasmJsMain {
+            dependsOn(webMain)
+        }
+        jsMain {
+            dependsOn(webMain)
         }
     }
+
+    compilerOptions.freeCompilerArgs.addAll(
+        "-Xexpect-actual-classes",
+    )
 }
 
 android {

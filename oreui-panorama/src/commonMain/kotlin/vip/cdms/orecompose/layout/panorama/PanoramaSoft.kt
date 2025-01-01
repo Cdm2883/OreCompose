@@ -10,10 +10,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.imageResource
+import vip.cdms.orecompose.utils.Platform
+import vip.cdms.orecompose.utils.RuntimePlatform
 import vip.cdms.orecompose.utils.drawPoint
 import vip.cdms.orecompose.utils.pixelPaint
 import kotlin.math.PI
 import kotlin.math.sqrt
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.nanoseconds
 
 /**
@@ -26,11 +30,10 @@ fun PanoramaSoft(
     equirectangular: ImageBitmap = imageResource(PanoramaDefaults.Equirectangular),
     modifier: Modifier = PanoramaDefaults.Modifier,
     rotating: Boolean = true,
-    width: Int = 1500,
-    height: Int = 750,
+    period: Duration = if (RuntimePlatform is Platform.Web) 100.milliseconds else 1.nanoseconds,
+    width: Int = 1500,  // 50
+    height: Int = 750,  // 25
 ) {
-    val pixels = remember { equirectangular.toPixelMap() }
-    val paint = remember { pixelPaint() }
     var image by remember { mutableStateOf<ImageBitmap?>(null) }
 
     val origin = remember { 35f * PI.toFloat() / 180 } // magic number
@@ -39,7 +42,9 @@ fun PanoramaSoft(
     val deg1 = remember { PI.toFloat() / 180 / 5 }
     val deg360 = remember { 2 * PI.toFloat() - origin }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(equirectangular) {
+        val pixels = equirectangular.toPixelMap()
+        val paint = pixelPaint()
         withContext(Dispatchers.Unconfined) {
             do {
                 val bitmap = ImageBitmap(width, height)
@@ -59,7 +64,7 @@ fun PanoramaSoft(
                 val next = yaw + direction * deg1
                 if (next > deg360 || next < origin) direction *= -1
                 else yaw = next
-                delay(1.nanoseconds)
+                delay(period)
             } while (rotating && isActive)
         }
     }

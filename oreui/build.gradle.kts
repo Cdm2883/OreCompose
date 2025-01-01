@@ -34,8 +34,24 @@ kotlin {
             implementation(compose.material)
             implementation(compose.components.resources)
         }
+
         jvmMain.dependencies {
             implementation(compose.desktop.common)
+        }
+
+        val webMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.kilua.dom)
+            }
+        }
+
+        wasmJsMain {
+            dependsOn(webMain)
+        }
+
+        jsMain {
+            dependsOn(webMain)
         }
     }
 }

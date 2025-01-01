@@ -5,21 +5,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
 import vip.cdms.orecompose.components.LocalLabel
+import vip.cdms.orecompose.utils.ComposeNester
 import vip.cdms.orecompose.utils.LocalFontsFallback
+
+typealias OreModule = ComposeNester
 
 @Composable
 fun OreTheme(
-    fallbackMcFont: Boolean = true,
+    fallbackMcFonts: Boolean = true,
+    modules: Array<OreModule>? = null,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(*mutableListOf<ProvidedValue<*>>().apply {
-        if (fallbackMcFont) this += arrayOf(
-            LocalFontsFallback provides arrayOf(MinecraftAsciiFont.Fallback),
-            LocalLabel.AutoFontsFallbackEnabled provides true,
-        )
-    }.toTypedArray()) {
-        MaterialTheme(
-            content = content
-        )
-    }
+    OreModule.Apply(modules, OreModule.wrap {
+        CompositionLocalProvider(*mutableListOf<ProvidedValue<*>>().apply {
+            if (fallbackMcFonts) this += arrayOf(
+                LocalFontsFallback provides arrayOf(McFonts.Ascii.Fallback),
+                LocalLabel.AutoFontsFallbackEnabled provides true,
+            )
+        }.toTypedArray()) {
+            PlatformOreTheme {
+                MaterialTheme(
+                    content = it
+                )
+            }
+        }
+    }, content)
 }
+
+@Composable
+internal expect fun PlatformOreTheme(content: @Composable () -> Unit)

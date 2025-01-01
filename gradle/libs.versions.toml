@@ -9,11 +9,13 @@ compose-multiplatform = "1.7.3"
 kotlin = "2.1.0"
 
 androidx-activity-compose = "1.9.3"
+kilua = "0.0.16"
 
 mayakapps-compose-window-styler = "0.3.3-SNAPSHOT"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+kilua-dom = { module = "dev.kilua:kilua-dom", version.ref = "kilua" }
 
 # gallery
 mayakapps-compose-window-styler = { module = "com.mayakapps.compose:window-styler", version.ref = "mayakapps-compose-window-styler" }

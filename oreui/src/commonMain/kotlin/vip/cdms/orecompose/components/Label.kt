@@ -16,8 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import vip.cdms.orecompose.utils.LocalFontsFallback
-import vip.cdms.orecompose.utils.fontsFallback
+import vip.cdms.orecompose.utils.*
 
 object LocalLabel {
     val AutoFontsFallbackEnabled = staticCompositionLocalOf { false }
@@ -44,13 +43,9 @@ fun Label(
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current
 ) {
-    var texted by remember { mutableStateOf(text) }
-    val localFontsFallback = LocalFontsFallback.current
-    if (!localFontsFallback.isNullOrEmpty() && LocalLabel.AutoFontsFallbackEnabled.current) LaunchedEffect(text) {
-        texted = text.fontsFallback(*localFontsFallback)  // !!! TIME-CONSUMING !!!
-    }
-    Text(
-        texted,
+    @Composable
+    fun Text(text: AnnotatedString) = Text(
+        text,
         modifier,
         color,
         fontSize,
@@ -69,6 +64,16 @@ fun Label(
         onTextLayout,
         style
     )
+
+    // FIXME(web): cache label text
+    if (RuntimePlatform is Platform.Web) return Text(if (LocalLabel.AutoFontsFallbackEnabled.current) text.localFontsFallback() else text)
+
+    var texted by remember { mutableStateOf<AnnotatedString?>(null) }
+    val localFontsFallback = LocalFontsFallback.current
+    if (!localFontsFallback.isNullOrEmpty() && LocalLabel.AutoFontsFallbackEnabled.current) LaunchedEffect(text) {
+        texted = text.fontsFallback(*localFontsFallback)  // !!! TIME-CONSUMING !!!
+    }
+    Text(texted ?: text)
 }
 
 @Composable
