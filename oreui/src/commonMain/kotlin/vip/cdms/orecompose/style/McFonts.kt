@@ -38,5 +38,5 @@ object McFonts {
         inline fun hasGlyph(c: Char) = c.code in Glyphs
     }
 
-    // TODO: bold font like title
+    // TODO(oreui): bold font (e.g. title)
 }

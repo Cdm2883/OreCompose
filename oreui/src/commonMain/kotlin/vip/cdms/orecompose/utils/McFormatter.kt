@@ -33,4 +33,4 @@ val McFormattingColors = with(McFormat) {
     )
 }
 
-// TODO: text color renderer (support input / rich text edit)
+// TODO(oreui): text color renderer (support input & rich text edit)

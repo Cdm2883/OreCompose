@@ -7,5 +7,13 @@ import androidx.compose.ui.graphics.ImageBitmap
 @Composable
 actual fun Panorama(equirectangular: ImageBitmap, modifier: Modifier, rotating: Boolean) {
     PanoramaSoft(equirectangular, modifier, rotating)
-    // TODO: use SwingPanel for 3d lib
+
+//    TODO(oreui-panorama/desktop): use skiko magic
+//    val skiaImage = remember(equirectangular) { equirectangular.toAwtImage().toImage() }
+//
+//    Canvas(modifier = modifier) {
+//        drawIntoCanvas { canvas ->
+//            val skiaCanvas = canvas.nativeCanvas
+//        }
+//    }
 }

@@ -65,8 +65,10 @@ fun Label(
         style
     )
 
-    // FIXME(web): cache label text
-    if (RuntimePlatform is Platform.Web) return Text(if (LocalLabel.AutoFontsFallbackEnabled.current) text.localFontsFallback() else text)
+    // FIXME(oreui/web): cache label text
+    if (RuntimePlatform is Platform.Web)
+        // weird, localFontsFallback will be not working with another scope outer (like LaunchedEffect & if-else)
+        return Text(if (LocalLabel.AutoFontsFallbackEnabled.current) text.localFontsFallback() else text)
 
     var texted by remember { mutableStateOf<AnnotatedString?>(null) }
     val localFontsFallback = LocalFontsFallback.current
