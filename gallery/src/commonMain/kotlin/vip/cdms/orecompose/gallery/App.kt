@@ -9,16 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import orecompose.gallery.generated.resources.HarmonyOS_Sans_SC_Regular
 import orecompose.gallery.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 import vip.cdms.orecompose.components.Label
-import vip.cdms.orecompose.layout.panorama.Panorama
 import vip.cdms.orecompose.layout.panorama.OrePanoramaModule
+import vip.cdms.orecompose.layout.panorama.Panorama
 import vip.cdms.orecompose.style.OreTheme
+import vip.cdms.orecompose.utils.toPx
 
 @Composable
 fun App() {
@@ -39,7 +39,7 @@ fun App() {
                 Label(
                     "OreCompose! 你好世界！",
                     color = Color.White,
-                    fontSize = LocalDensity.current.run { (screenWidth / 16).toSp() }
+                    fontSize = (screenWidth / 16).toPx()
                 )
             }
         }

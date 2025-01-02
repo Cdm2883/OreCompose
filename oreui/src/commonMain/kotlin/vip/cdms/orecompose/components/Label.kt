@@ -15,7 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.TextUnit
+import vip.cdms.orecompose.effect.Pixel
+import vip.cdms.orecompose.effect.Px
 import vip.cdms.orecompose.utils.*
 
 object LocalLabel {
@@ -27,14 +28,14 @@ fun Label(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
-    fontSize: TextUnit = TextUnit.Unspecified,
+    fontSize: Px = Pixel.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,
     fontFamily: FontFamily? = null,
-    letterSpacing: TextUnit = TextUnit.Unspecified,
+    letterSpacing: Px = Pixel.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
-    lineHeight: TextUnit = TextUnit.Unspecified,
+    lineHeight: Px = Pixel.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
@@ -48,14 +49,14 @@ fun Label(
         text,
         modifier,
         color,
-        fontSize,
+        fontSize.toSp(),
         fontStyle,
         fontWeight,
         fontFamily,
-        letterSpacing,
+        letterSpacing.toSp(),
         textDecoration,
         textAlign,
-        lineHeight,
+        lineHeight.toSp(),
         overflow,
         softWrap,
         maxLines,
@@ -83,14 +84,14 @@ fun Label(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
-    fontSize: TextUnit = TextUnit.Unspecified,
+    fontSize: Px = Pixel.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,
     fontFamily: FontFamily? = null,
-    letterSpacing: TextUnit = TextUnit.Unspecified,
+    letterSpacing: Px = Pixel.Unspecified,
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
-    lineHeight: TextUnit = TextUnit.Unspecified,
+    lineHeight: Px = Pixel.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
