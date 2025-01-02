@@ -17,9 +17,29 @@ val LocalPixelSize = staticCompositionLocalOf { DefaultPixelSize }
 
 typealias Px = Pixel
 
+/**
+ * Dimension value that is used to ensure that
+ * the relative size of each place is strictly consistent.
+ *
+ * Just like the real pixel means, but it can be scaled.
+ */
 @Immutable
 @JvmInline
 value class Pixel(val value: Float) : Comparable<Pixel> {
+    //
+    // Maybe it should be a single fixed multiple instead of
+    // a multiple of [LocalPixelSize] which can only be got in [Composable] scope
+    // (just like the contagiousness of coroutines & js async)?
+    //
+    // The [Density] is already a modifiable scale value,
+    // is it necessary to add one more factor that is more difficult to use?
+    //
+    // If we don't use [LocalPixelSize], it's easier to
+    // use in a draw function that only gets [Density] without additional wrapping.
+    //
+    // But now there is still a chance to modify it thanks to the excellent program decoupling design!
+    // Save that for later when more related issues arise.
+    //
     @Composable inline fun toDp() = if (isSpecified) value * LocalPixelSize.current else Dp.Unspecified
 
     @Stable inline val isSpecified get() = !value.isNaN()
