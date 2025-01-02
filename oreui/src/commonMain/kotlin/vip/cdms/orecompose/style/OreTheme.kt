@@ -9,6 +9,7 @@ import vip.cdms.orecompose.components.LocalLabel
 import vip.cdms.orecompose.effect.LocalPixelSize
 import vip.cdms.orecompose.utils.ComposeNester
 import vip.cdms.orecompose.utils.LocalFontsFallback
+import vip.cdms.orecompose.utils.providesMore
 
 typealias OreModule = ComposeNester
 
@@ -23,7 +24,7 @@ fun OreTheme(
         CompositionLocalProvider(*mutableListOf<ProvidedValue<*>>().apply {
             if (pixelSize != null) this += LocalPixelSize provides pixelSize
             if (fallbackMcFonts) this += arrayOf(
-                LocalFontsFallback provides arrayOf(McFonts.Ascii.Fallback),
+                LocalFontsFallback providesMore arrayOf(McFonts.Ascii.Fallback),
                 LocalLabel.AutoFontsFallbackEnabled provides true,
             )
         }.toTypedArray()) {
