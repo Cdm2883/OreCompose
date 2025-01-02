@@ -27,7 +27,7 @@ val LocalPreloadResources = staticCompositionLocalOf<Array<ResourceUrl>?> { null
         val KProperty0<FontResource>.otf inline get() = "$name.otf"
 
         // stupid kmp reflect metadata, we need real qualifiedName >:(
-        inline fun <reified T> T.resourcesUrl(packaging: String, suffix: String = "", file: T.() -> String) =
+        inline fun <reified T> T.resourceUrl(packaging: String, suffix: String = "", file: T.() -> String) =
             ResourceUrl(packaging, T::class.simpleName!! + suffix, file(this))
     }
 }

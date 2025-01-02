@@ -6,7 +6,7 @@ import kotlinx.browser.document
 import orecompose.gallery.generated.resources.HarmonyOS_Sans_SC_Regular
 import orecompose.gallery.generated.resources.Res
 import vip.cdms.orecompose.utils.PreloadResources
-import vip.cdms.orecompose.utils.ResourceUrl.Companion.resourcesUrl
+import vip.cdms.orecompose.utils.ResourceUrl.Companion.resourceUrl
 import vip.cdms.orecompose.utils.ResourceUrl.Companion.ttf
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -14,7 +14,7 @@ fun main() {
     ComposeViewport(document.body!!) {
         val packaging = "orecompose.gallery.generated.resources"
         PreloadResources(
-            Res.font.resourcesUrl(packaging) { ::HarmonyOS_Sans_SC_Regular.ttf },
+            Res.font.resourceUrl(packaging) { ::HarmonyOS_Sans_SC_Regular.ttf },
         ) {
             App()
         }
