@@ -2,14 +2,17 @@ package vip.cdms.orecompose.utils
 
 import androidx.compose.runtime.Composable
 
+private typealias Component = @Composable () -> Unit
+private typealias ModuleWrapper = @Composable (Component) -> Unit
+
 interface ComposeNester {
     @Composable
     operator fun invoke(content: @Composable () -> Unit)
 
     companion object {
-        inline fun wrap(crossinline wrapper: @Composable (@Composable () -> Unit) -> Unit) = object : ComposeNester {
+        inline fun wrap(crossinline wrapper: ModuleWrapper) = object : ComposeNester {
             @Composable
-            override operator fun invoke(content: @Composable () -> Unit) = wrapper(content)
+            override operator fun invoke(content: Component) = wrapper(content)
         }
 
         /**
@@ -24,9 +27,13 @@ interface ComposeNester {
          * ```
          */
         @Composable
-        inline fun <reified T : ComposeNester> Apply(modules: Array<T>?, core: T, noinline content: @Composable () -> Unit) =
+        inline fun <reified T : ComposeNester> Apply(modules: Array<T>?, core: T, noinline content: Component) =
 //            ((modules ?: emptyArray()) + core).foldRight(content) { module, acc -> { module(acc) } }()
             if (modules == null) core { content() }
             else (modules + core).foldRight(content) { module, acc -> { module(acc) } }()
+
+        @Composable
+        inline fun <reified T : ComposeNester> Apply(modules: Array<T>?, noinline content: Component, crossinline core: ModuleWrapper) =
+            Apply(modules, wrap(core) as T, content)
     }
 }
