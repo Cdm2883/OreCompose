@@ -6,7 +6,7 @@ android-sdk-compile = "34"
 android-sdk-min = "24"
 android-sdk-target = "34"
 compose-multiplatform = "1.7.3"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 
 androidx-activity-compose = "1.10.0"
 kilua = "0.0.16"
