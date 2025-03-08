@@ -32,12 +32,14 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.components.resources)
+            compileOnly(libs.jetbrains.annotations)
             implementation(projects.oreui)
         }
 
         val nonWebMain by creating {
             dependsOn(commonMain.get())
         }
+
         androidMain {
             dependsOn(nonWebMain)
             dependencies {
@@ -45,16 +47,22 @@ kotlin {
                 implementation("com.github.androidZzT:VRPanoramaView:1.0.1")
             }
         }
+
+        val skikoMain by creating {
+            dependsOn(commonMain.get())
+        }
         jvmMain {
             dependsOn(nonWebMain)
+            dependsOn(skikoMain)
             dependencies {
                 implementation(compose.desktop.common)
             }
         }
 
         val webMain by creating {
-            dependsOn(commonMain.get())
+            dependsOn(skikoMain)
             dependencies {
+                implementation(libs.jetbrains.annotations)
                 implementation(libs.kilua.dom)
             }
         }

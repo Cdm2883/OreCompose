@@ -10,12 +10,14 @@ kotlin = "2.1.10"
 
 androidx-activity-compose = "1.10.0"
 kilua = "0.0.16"
+jetbrains-annotations = "26.0.2"
 
 mayakapps-compose-window-styler = "0.3.3-SNAPSHOT"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 kilua-dom = { module = "dev.kilua:kilua-dom", version.ref = "kilua" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
 
 # gallery
 mayakapps-compose-window-styler = { module = "com.mayakapps.compose:window-styler", version.ref = "mayakapps-compose-window-styler" }

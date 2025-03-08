@@ -6,5 +6,5 @@ import androidx.compose.ui.graphics.ImageBitmap
 
 @Composable
 actual fun Panorama(equirectangular: ImageBitmap, modifier: Modifier, rotating: Boolean) {
-    PanoramaSoft(equirectangular, modifier, rotating)
+    PanoramaSkiko(equirectangular, modifier, rotating)
 }
