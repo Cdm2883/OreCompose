@@ -20,12 +20,15 @@ val LocalOutlineColor = staticCompositionLocalOf { OreColors.Outline }
 val LocalOutlineWidth = staticCompositionLocalOf { 1.px }
 
 @Composable
-fun Modifier.outline(color: Color? = null, padding: Boolean = true) =
-    outline(color ?: LocalOutlineColor.current, LocalOutlineWidth.current, padding)
-
-@Composable
-fun Modifier.outline(color: Color, width: Px, padding: Boolean = true) =
-    outline(color, width.toDp(), padding)
+fun Modifier.outline(
+    color: Color = LocalOutlineColor.current,
+    width: Px = LocalOutlineWidth.current,
+    padding: Boolean = true
+) = outline(
+    color,
+    width.toDp(),
+    padding
+)
 
 fun Modifier.outline(color: Color, width: Dp, padding: Boolean = true) =
     if (padding) padding(width).outline(color, width, Dp.Unspecified)
