@@ -24,6 +24,8 @@ fun Modifier.foreground(color: Color) = drawWithContent {
 }
 
 /**
+ * A panorama viewer with auto rotating like Minecraft UI background.
+ *
  * Could use [PanoramaBE](https://github.com/MineBuilders/PanoramaBE)
  * to generate the equirectangular.
  */

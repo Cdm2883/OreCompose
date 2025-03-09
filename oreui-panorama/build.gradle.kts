@@ -62,7 +62,7 @@ kotlin {
         val webMain by creating {
             dependsOn(skikoMain)
             dependencies {
-                implementation(libs.jetbrains.annotations)
+                api(libs.jetbrains.annotations)
                 implementation(libs.kilua.dom)
             }
         }
