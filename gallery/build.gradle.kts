@@ -66,6 +66,11 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.mayakapps.compose.window.styler)
         }
+
+        val webMain by creating
+        webMain.dependsOn(commonMain.get())
+        jsMain.get().dependsOn(webMain)
+        wasmJsMain.get().dependsOn(webMain)
     }
 }
 
