@@ -2,9 +2,9 @@
 orecompose-lib-version = "0.0.1-alpha"
 
 android-gradle-plugin = "8.5.2"
-android-sdk-compile = "34"
+android-sdk-compile = "35"
 android-sdk-min = "24"
-android-sdk-target = "34"
+android-sdk-target = "35"
 compose-multiplatform = "1.7.3"
 kotlin = "2.1.10"
 
