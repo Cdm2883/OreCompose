@@ -43,6 +43,7 @@ kotlin {
         androidMain {
             dependsOn(nonWebMain)
             dependencies {
+                api(libs.jetbrains.annotations)
                 //noinspection UseTomlInstead
                 implementation("com.github.androidZzT:VRPanoramaView:1.0.1")
             }
