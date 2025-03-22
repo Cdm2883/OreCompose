@@ -26,6 +26,8 @@ kotlin {
         browser()
     }
 
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
