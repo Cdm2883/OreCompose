@@ -12,7 +12,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.zIndex
 import vip.cdms.orecompose.effect.LocalOutlineWidth
-import vip.cdms.orecompose.effect.ZIndices
+import vip.cdms.orecompose.style.ZIndices
 import vip.cdms.orecompose.effect.accInnerOutlinesWidth
 import vip.cdms.orecompose.effect.outline
 import vip.cdms.orecompose.style.OreColors
