@@ -7,9 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.zIndex
 import vip.cdms.orecompose.effect.LocalOutlineWidth
 import vip.cdms.orecompose.style.ZIndices
@@ -36,6 +34,7 @@ fun Modifier.accessibilityIndicator(interactionSource: InteractionSource) = accI
         remember(hovered) { isTab = false }
 
         onKeyEvent {
+            if (it.type == KeyEventType.Unknown) return@onKeyEvent false
             isTab = it.key == Key.Tab
             false
         }.run {
